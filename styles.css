@@ -1,34 +1,18 @@
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  color: #333;
+body{
+    background-color: rgb(115, 119, 118);
+    color: black;
+    font-family: Arial ;
 }
-
-header {
-  background: #f4f4f4;
-  padding: 20px;
-  text-align: center;
-  margin-bottom: 20px;
+.menu{
+    background-color: rgba(63, 65, 66, 0.568);
+    border-radius: 5%;
 }
-
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
+.MainBox{
+    background-color: rgb(169, 170, 170);
+    border-radius: 5%;
+    
 }
-
-button:hover {
-  background: #0056b3;
-}
-
-footer {
-  text-align: center;
-  margin-top: 40px;
-  color: #666;
+.footer{
+    background-color: rgba(63, 65, 66, 0.568);
+    border-radius: 10%;
 }
