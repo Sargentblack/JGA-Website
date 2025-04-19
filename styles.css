@@ -1,18 +1,59 @@
 body{
     background-color: rgb(115, 119, 118);
     color: black;
-    font-family: Arial ;
+    font-family: Arial, sans-serif ;
+    font-size: larger;
+}
+.header{
+    padding: 1rem;
+    text-align: center;
+    
+    position: sticky;
 }
 .menu{
     background-color: rgba(63, 65, 66, 0.568);
-    border-radius: 5%;
+    border-radius: 10px;
+    text-decoration: underline;
+    margin-top: 0px;
+}
+.menu ul{
+    display: flex;
+}
+.menu li {
+    position: relative;
+    padding: 20px;
 }
 .MainBox{
     background-color: rgb(169, 170, 170);
     border-radius: 5%;
+    padding: 5%;
     
 }
 .footer{
     background-color: rgba(63, 65, 66, 0.568);
-    border-radius: 10%;
+    border-radius: 10px;
+    padding: 1%;
+    text-decoration: underline;
+}
+.Box{
+    background-color: rgba(79, 82, 82, 0.404);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+    
+}
+.img{
+    height: 15%;
+    width: 25%;
+    border-radius: 10px;
+    position: relative;
+    margin-top: 0%;
+}
+#imgRight{
+    float: right;
+    padding-left: 5px;
+}
+#imgLeft{
+    float: left;
+    padding-right: 5px;
 }
