@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Garden Planner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background: #f7f7f7;
+    }
+    h1 {
+      color: #3b7f47;
+    }
+    label {
+      display: block;
+      margin: 1em 0 0.5em;
+    }
+    select, input, button {
+      padding: 0.5em;
+      font-size: 1em;
+    }
+    #output {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1em;
+      margin-top: 2em;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Garden Planner Calculator</h1>
+
+  <label>Garden Length (meters):</label>
+  <input type="number" id="length" step="0.01" />
+
+  <label>Garden Width (meters):</label>
+  <input type="number" id="width" step="0.01" />
+
+  <label>Select a Plant:</label>
+  <select id="plant">
+    <option value="Cabbage">Cabbage</option>
+    <option value="Potatoes">Potatoes</option>
+    <option value="Spinach">Spinach</option>
+    <option value="Carrots">Carrots</option>
+    <option value="Maize (Mealies)">Maize (Mealies)</option>
+    <option value="Pumpkin">Pumpkin</option>
+    <option value="Onion">Onion</option>
+    <option value="Beetroot">Beetroot</option>
+    <option value="Tomatoes">Tomatoes</option>
+  </select>
+
+  <label>Would you like fencing?</label>
+  <select id="fenceYesNo">
+    <option value="N">No</option>
+    <option value="Y">Yes</option>
+  </select>
+
+  <div id="fenceOptions" style="display: none;">
+    <label>Select Fence Type:</label>
+    <select id="fenceType">
+      <option value="0">Treated pine (R600)</option>
+      <option value="1">Tubular metal/Palisade (R900)</option>
+      <option value="2">Slated pine (R1000)</option>
+      <option value="3">Clear-view (R1500)</option>
+      <option value="4">Hardwood (R1800)</option>
+      <option value="5">Hardwood w/ Sandstone (R3000)</option>
+      <option value="6">Wrought iron (R4500)</option>
+      <option value="7">Sandstone wall (R5500)</option>
+    </select>
+  </div>
+
+  <button onclick="gardenCalculator()">Calculate</button>
+
+  <pre id="output"></pre>
+
+  <script src="script.js"></script>
+</body>
+</html>
