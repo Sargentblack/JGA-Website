@@ -4,6 +4,12 @@ public class GardenCalculator {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
 
+        int plantChoice = 0;
+        String selectedPlant = " ";
+        double plantSpacing = 0;
+        String growthTime = " ";
+        String growthInstructions = " "; 
+
         System.out.print("Enter garden length (m): ");
         double length = sc.nextDouble();
 
@@ -13,122 +19,134 @@ public class GardenCalculator {
         double area = length * width;
         System.out.println("Garden Area: " + area + " sq. meters.");
 
-        System.out.println("\nAvailable Plants to Grow:");
-        System.out.println("1. Cabbage");
-        System.out.println("2. Potatoes");
-        System.out.println("3. Spinach");
-        System.out.println("4. Carrots");
-        System.out.println("5. Maize (Mealies)");
-        System.out.println("6. Pumpkin");
-        System.out.println("7. Onion");
-        System.out.println("8. Beetroot");
-        System.out.println("9. Tomatoes");
-        System.out.print("Enter the number corresponding to the plant you'd like to grow: ");
-        int plantChoice = sc.nextInt();
-        sc.nextLine();
+        do{
+            System.out.println("\nAvailable Plants to Grow:\n1. Cabbage\n2. Potatoes\n3. Spinach\n4. Carrots\n5. Maize (Mealies)\n6. Pumpkin\n7. Onion\n8. Beetroot\n9. Tomatoes");
+            
+            System.out.print("\nEnter the number corresponding to the plant you'd like to grow: ");
+            plantChoice = sc.nextInt();
+            sc.nextLine();
 
-        String selectedPlant = "";
-        double plantSpacing = 0;
-        String growthTime = ""; 
-
-        if (plantChoice == 1) {
-            selectedPlant = "Cabbage";
-            plantSpacing = 0.45;
-            growthTime = "3-4 months";
-        } else if (plantChoice == 2) {
-            selectedPlant = "Potatoes";
-            plantSpacing = 0.30;
-            growthTime = "3-4 months";
-        } else if (plantChoice == 3) {
-            selectedPlant = "Spinach";
-            plantSpacing = 0.10;
-            growthTime = "6-8 weeks";
-        } else if (plantChoice == 4) {
-            selectedPlant = "Carrots";
-            plantSpacing = 0.06;
-            growthTime = "2-3 months";
-        } else if (plantChoice == 5) {
-            selectedPlant = "Maize (Mealies)";
-            plantSpacing = 0.30;
-            growthTime = "3-4 months";
-        } else if (plantChoice == 6) {
-            selectedPlant = "Pumpkin";
-            plantSpacing = 1.5;
-            growthTime = "3-4 months";
-        } else if (plantChoice == 7) {
-            selectedPlant = "Onion";
-            plantSpacing = 0.125;
-            growthTime = "3-4 months";
-        } else if (plantChoice == 8) {
-            selectedPlant = "Beetroot";
-            plantSpacing = 0.125;
-            growthTime = "2-3 months";
-        } else if (plantChoice == 9) {
-            selectedPlant = "Tomatoes";
-            plantSpacing = 0.75;
-            growthTime = "2-3 months";
-        } else {
-            System.out.println("Invalid choice. Please select from the list.");
-            return;
-        }
+            switch (plantChoice) {
+                case 1:    
+                    selectedPlant = "Cabbage";
+                    plantSpacing = 0.45;
+                    growthTime = "3-4 months";
+                    break;
+                case 2:
+                    selectedPlant = "Potatoes";
+                    plantSpacing = 0.30;
+                    growthTime = "3-4 months";
+                    break;
+                case 3:
+                    selectedPlant = "Spinach";
+                    plantSpacing = 0.10;
+                    growthTime = "6-8 weeks";
+                    break;
+                case 4:
+                    selectedPlant = "Carrots";
+                    plantSpacing = 0.06;
+                    growthTime = "2-3 months";
+                    break;
+                case 5:
+                    selectedPlant = "Maize (Mealies)";
+                    plantSpacing = 0.30;
+                    growthTime = "3-4 months";
+                    break;
+                case 6:
+                    selectedPlant = "Pumpkin";
+                    plantSpacing = 1.5;
+                    growthTime = "3-4 months";
+                    break;
+                case 7:
+                    selectedPlant = "Onion";
+                    plantSpacing = 0.125;
+                    growthTime = "3-4 months";
+                    break;
+                case 8:
+                    selectedPlant = "Beetroot";
+                    plantSpacing = 0.125;
+                    growthTime = "2-3 months";
+                    break;
+                case 9:
+                    selectedPlant = "Tomatoes";
+                    plantSpacing = 0.75;
+                    growthTime = "2-3 months";
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select from the list.");
+                    return;
+            }
+        } while (plantChoice>=1 && plantChoice<=9);
 
         System.out.println("\nYou have selected: " + selectedPlant);
         System.out.println("Spacing: " + plantSpacing + " meters");
         System.out.println("Estimated Growth Time: " + growthTime);
         System.out.println("\n--- Planting Guide for " + selectedPlant + " ---");
 
-        if (selectedPlant.equals("Cabbage")) {
-            System.out.println("1. Choose a sunny spot with well-drained soil.");
-            System.out.println("2. Sow seeds indoors 4-6 weeks before the last frost or direct sow outdoors.");
-            System.out.println("3. Space seedlings 30-60 cm apart.");
-            System.out.println("4. Water regularly, especially during dry periods.");
-            System.out.println("5. Harvest when heads are firm and mature.");
-        } else if (selectedPlant.equals("Potatoes")) {
-            System.out.println("1. Select a sunny location with loose, well-drained soil.");
-            System.out.println("2. Plant seed potatoes about 15 cm deep and 30 cm apart.");
-            System.out.println("3. As shoots emerge, hill the soil around them to encourage more potato growth.");
-            System.out.println("4. Water regularly, especially when tubers are forming.");
-            System.out.println("5. Harvest when the foliage starts to die back.");
-        } else if (selectedPlant.equals("Spinach")) {
-            System.out.println("1. Plant in a sunny or partially shaded area with well-drained soil.");
-            System.out.println("2. Sow seeds directly in the ground, about 1 cm deep and 5-10 cm apart.");
-            System.out.println("3. Keep the soil consistently moist.");
-            System.out.println("4. Harvest outer leaves as needed or cut the whole plant.");
-            System.out.println("5. Spinach prefers cooler weather.");
-        } else if (selectedPlant.equals("Carrots")) {
-            System.out.println("1. Choose a sunny spot with loose, stone-free soil.");
-            System.out.println("2. Sow seeds directly in the ground, about 1 cm deep and 2-5 cm apart.");
-            System.out.println("3. Thin seedlings to about 5-7 cm apart.");
-            System.out.println("4. Water regularly and avoid excessive nitrogen fertilizer.");
-            System.out.println("5. Harvest when roots are of a desired size and color.");
-        } else if (selectedPlant.equals("Maize (Mealies)")) {
-            System.out.println("1. Select a sunny location with fertile, well-drained soil.");
-            System.out.println("2. Sow seeds directly in the ground, about 2-3 cm deep and in blocks for good pollination (e.g., 30 cm apart in rows 60-90 cm apart).");
-            System.out.println("3. Water regularly, especially during tasseling and ear development.");
-            System.out.println("4. Harvest when silks have turned brown and kernels are plump.");
-        } else if (selectedPlant.equals("Pumpkin")) {
-            System.out.println("1. Plant in a sunny location with rich, well-drained soil.");
-            System.out.println("2. Sow seeds in hills, about 2-3 cm deep, with several seeds per hill and hills spaced 1-2 meters apart.");
-            System.out.println("3. Thin to the strongest 2-3 seedlings per hill.");
-            System.out.println("4. Water deeply and regularly.");
-            System.out.println("5. Harvest when the skin is hard and the stem is dry.");
-        } else if (selectedPlant.equals("Onion")) {
-            System.out.println("1. Choose a sunny spot with well-drained, fertile soil.");
-            System.out.println("2. Plant sets about 2-3 cm deep and 10-15 cm apart, or sow seeds thinly.");
-            System.out.println("3. Water regularly, especially during bulb formation.");
-            System.out.println("4. Harvest when the tops start to turn yellow and fall over.");
-        } else if (selectedPlant.equals("Beetroot")) {
-            System.out.println("1. Plant in a sunny location with loose, well-drained soil.");
-            System.out.println("2. Sow seeds directly in the ground, about 1-2 cm deep and 5-10 cm apart.");
-            System.out.println("3. Thin seedlings to about 10-15 cm apart.");
-            System.out.println("4. Water regularly.");
-            System.out.println("5. Harvest when roots are of a desired size.");
-        } else if (selectedPlant.equals("Tomatoes")) {
-            System.out.println("1. Select a sunny spot with well-drained, fertile soil.");
-            System.out.println("2. Start seeds indoors 6-8 weeks before the last frost or purchase seedlings.");
-            System.out.println("3. Transplant seedlings when they are strong enough, spacing them 60-90 cm apart.");
-            System.out.println("4. Water regularly and provide support like 'stakes' or 'cages' as they grow.");
-            System.out.println("5. Harvest when fruits are fully colored and slightly soft to the touch.");
+        switch (selectedPlant) {
+           case "Cabbage":
+                growthInstructions = "1. Choose a sunny spot with well-drained soil.\n"
+                    + "2. Sow seeds indoors 4-6 weeks before the last frost or direct sow outdoors.\n"
+                    + "3. Space seedlings 30-60 cm apart.\n"
+                    + "4. Water regularly, especially during dry periods.\n"
+                    + "5. Harvest when heads are firm and mature.";
+                break;
+            case "Potatoes":
+                growthInstructions = "1. Select a sunny location with loose, well-drained soil.\n"
+                    + "2. Plant seed potatoes about 15 cm deep and 30 cm apart.\n"
+                    + "3. As shoots emerge, hill the soil around them to encourage more potato growth.\n"
+                    + "4. Water regularly, especially when tubers are forming.\n"
+                    + "5. Harvest when the foliage starts to die back.";
+                break;
+            case "Spinach":
+                growthInstructions = "1. Plant in a sunny or partially shaded area with well-drained soil.\n"
+                    + "2. Sow seeds directly in the ground, about 1 cm deep and 5-10 cm apart.\n"
+                    + "3. Keep the soil consistently moist.\n"
+                    + "4. Harvest outer leaves as needed or cut the whole plant.\n"
+                    + "5. Spinach prefers cooler weather.";
+                break;
+            case "Carrots":
+                growthInstructions = "1. Choose a sunny spot with loose, stone-free soil.\n"
+                    + "2. Sow seeds directly in the ground, about 1 cm deep and 2-5 cm apart.\n"
+                    + "3. Thin seedlings to about 5-7 cm apart.\n"
+                    + "4. Water regularly and avoid excessive nitrogen fertilizer.\n"
+                    + "5. Harvest when roots are of a desired size and color.";
+                break;
+            case "Maize (Mealies)":
+                growthInstructions = "1. Select a sunny location with fertile, well-drained soil.\n"
+                    + "2. Sow seeds directly in the ground, about 2-3 cm deep and in blocks for good pollination (e.g., 30 cm apart in rows 60-90 cm apart).\n"
+                    + "3. Water regularly, especially during tasseling and ear development.\n"
+                    + "4. Harvest when silks have turned brown and kernels are plump.";
+                break;
+            case "Pumpkin":
+                growthInstructions = "1. Plant in a sunny location with rich, well-drained soil.\n"
+                    + "2. Sow seeds in hills, about 2-3 cm deep, with several seeds per hill and hills spaced 1-2 meters apart.\n"
+                    + "3. Thin to the strongest 2-3 seedlings per hill.\n"
+                    + "4. Water deeply and regularly.\n"
+                    + "5. Harvest when the skin is hard and the stem is dry.";
+                break;
+            case "Onion":
+                growthInstructions = "1. Choose a sunny spot with well-drained, fertile soil.\n"
+                    + "2. Plant sets about 2-3 cm deep and 10-15 cm apart, or sow seeds thinly.\n"
+                    + "3. Water regularly, especially during bulb formation.\n"
+                    + "4. Harvest when the tops start to turn yellow and fall over.";
+                break;
+            case "Beetroot":
+                growthInstructions = "1. Plant in a sunny location with loose, well-drained soil.\n"
+                    + "2. Sow seeds directly in the ground, about 1-2 cm deep and 5-10 cm apart.\n"
+                    + "3. Thin seedlings to about 10-15 cm apart.\n"
+                    + "4. Water regularly.\n"
+                    + "5. Harvest when roots are of a desired size.";
+                break;
+            case "Tomatoes":
+                growthInstructions = "1. Select a sunny spot with well-drained, fertile soil.\n"
+                    + "2. Start seeds indoors 6-8 weeks before the last frost or purchase seedlings.\n"
+                    + "3. Transplant seedlings when they are strong enough, spacing them 60-90 cm apart.\n"
+                    + "4. Water regularly and provide support like 'stakes' or 'cages' as they grow.\n"
+                    + "5. Harvest when fruits are fully colored and slightly soft to the touch.";
+                break;
+            default:
+                growthInstructions = "No instructions available.";
         }
 
         double perimeter = 2 * (length + width);
@@ -148,5 +166,7 @@ public class GardenCalculator {
         } else {
             System.out.println("Could not estimate the number of plants due to missing spacing information.");
         }
+        
+        System.out.println(growthInstructions);
     }
 }
