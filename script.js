@@ -1,11 +1,17 @@
 function gardenCalculator() {
   const df = (value) => `R${value.toFixed(2)}`;
 
+  const output = document.getElementById("output");
+
+  const print = (text) => {
+    output.textContent += text + "\n";
+  };
+
   const length = parseFloat(prompt("Enter garden length (m): "));
   const width = parseFloat(prompt("Enter garden width (m): "));
 
   const area = length * width;
-  alert("Garden Area: " + area.toFixed(2) + " sq. meters.");
+  print("Garden Area: " + area.toFixed(2) + " sq. meters.");
 
   const plantOptions = [
     "Cabbage",
@@ -83,15 +89,15 @@ function gardenCalculator() {
           break;
       }
     } else {
-      alert("Invalid choice. Please select from the list.");
+      print("Invalid choice. Please select from the list.");
       return;
     }
   } while (!(plantChoice >= 1 && plantChoice <= 9));
 
-  alert(`\nYou have selected: ${selectedPlant}\nSpacing: ${plantSpacing} meters\nEstimated Growth Time: ${growthTime}\n\n--- Planting Guide for ${selectedPlant} ---\n${growthInstructions}`);
+  print(`\nYou have selected: ${selectedPlant}\nSpacing: ${plantSpacing} meters\nEstimated Growth Time: ${growthTime}\n\n--- Planting Guide for ${selectedPlant} ---\n${growthInstructions}`);
 
   const perimeter = 2 * (length + width);
-  alert("Garden Perimeter: " + perimeter.toFixed(2) + " meters.");
+  print("Garden Perimeter: " + perimeter.toFixed(2) + " meters.");
 
   const fenceChoice = prompt("Would you like a fence for your garden? (Y/N):");
   let costPerMeter = 0;
@@ -115,9 +121,9 @@ function gardenCalculator() {
     if (fenceTypeChoice >= 1 && fenceTypeChoice <= 8) {
       [fenceType, costPerMeter] = fenceOptions[fenceTypeChoice - 1];
       const fencingCost = perimeter * costPerMeter;
-      alert(`Estimated Fencing Cost of ${fenceType} is ${df(fencingCost)}`);
+      print(`Estimated Fencing Cost of ${fenceType} is ${df(fencingCost)}`);
     } else {
-      alert("Invalid fence type selected.");
+      print("Invalid fence type selected.");
     }
   }
 
@@ -125,11 +131,8 @@ function gardenCalculator() {
     const plantsPerRow = Math.floor(length / plantSpacing);
     const numberOfRows = Math.floor(width / plantSpacing);
     const estimatedPlants = plantsPerRow * numberOfRows;
-    alert(`Estimated number of ${selectedPlant} that can fit: ${estimatedPlants}`);
+    print(`Estimated number of ${selectedPlant} that can fit: ${estimatedPlants}`);
   } else {
-    alert("Could not estimate the number of plants due to missing spacing information.");
+    print("Could not estimate the number of plants due to missing spacing information.");
   }
-}
-function print(text) {
-  document.getElementById("output").innerText += text + "\n";
 }
