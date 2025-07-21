@@ -1,16 +1,22 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class GardenCalculator {
     public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        DecimalFormat df = new DecimalFormat("R0.00");
 
         char fenceChoice = ' ';
         int plantChoice = 0;
-        int fenceType = 0;
-        String fenceTypeChoice = " ";
+        int fenceTypeChoice = 0;
+        int estimatedPlants = 0;
+        String fenceType = " ";
         String selectedPlant = " ";
         double plantSpacing = 0;
         double costPerMeter = 0;
+        double plantsPerRow = 0;
+        double numberOfRows = 0;
+        double fencingCost = 0;
         String growthTime = " ";
         String growthInstructions = " "; 
         
@@ -160,54 +166,60 @@ public class GardenCalculator {
 
         System.out.println("Would you like a fence for your garden?(Y/N)");
         fenceChoice = sc.next().charAt(0);
-        
-        if(fenceChoice == 'y'||fenceChoice=='Y'){
-            System.out.print("Which Type of fence would you like? \n1. Treated pine(R600 per metre) \n2. Tubular metal/Palisade(R900 per metre)  \n3. Slated pine(R1000 per metre) \n 4. Clear-view(R1500 per metre \n5. Hardwood(R1800 per metre) \n6. Hardwood with Sandstone accents(R3000) \n7. Wrought iron(R4500 per metre) \n8. Sandstone parameter wall(R5500)");
-            s
-            switch (fenceTypeChoice){
-                case 1:
-                    costPerMeter = 600;
-                    fenceType = "Treated pine";
-                    break;
-                case 2:
-                    costPerMeter = 900;
-                    fenceType = "Tubular metal/Palisade";
-                    break;
-                case 3:
-                    costPerMeter = 1000;
-                    fenceType = "Slated pine";
-                    break;
-                case 4:
-                    costPerMeter = 1500;
-                    fenceType = "Clear-view";
-                    break;
-                case 5:
-                    costPerMeter = 1800;
-                    fenceType = "Hardwood";
-                    break;
-                case 6:
-                    costPerMeter = 3000;
-                    fenceType = "Hardwood with Sandstone accents";
-                    break;
-                case 7:
-                    costPerMeter = 4500;
-                    fenceType = "Wrought iron";
-                    break;
-                case 8:
-                    costPerMeter = 5500;
-                    fenceType = "Sandstone parameter wall";
-                    break;
-                default:
-                            
-            }
 
-            double fencingCost = perimeter * costPerMeter;
-            System.out.println("Estimated Fencing Cost of "+ fenceType + "is" + fencingCost);
+        if(fenceChoice == 'y'||fenceChoice=='Y'){
+            do{
+                System.out.print("Which Type of fence would you like? \n1. Treated pine(R600 per metre) \n2. Tubular metal/Palisade(R900 per metre)  \n3. Slated pine(R1000 per metre) \n 4. Clear-view(R1500 per metre \n5. Hardwood(R1800 per metre) \n6. Hardwood with Sandstone accents(R3000) \n7. Wrought iron(R4500 per metre) \n8. Sandstone parameter wall(R5500)");
+                fenceTypeChoice = sc.nextInt();
+
+                switch (fenceTypeChoice){
+                    case 1:
+                        costPerMeter = 600;
+                        fenceType = "Treated pine";
+                        break;
+                    case 2:
+                        costPerMeter = 900;
+                        fenceType = "Tubular metal/Palisade";
+                        break;
+                    case 3:
+                        costPerMeter = 1000;
+                        fenceType = "Slated pine";
+                        break;
+                    case 4:
+                        costPerMeter = 1500;
+                        fenceType = "Clear-view";
+                        break;
+                    case 5:
+                        costPerMeter = 1800;
+                        fenceType = "Hardwood";
+                        break;
+                    case 6:
+                        costPerMeter = 3000;
+                        fenceType = "Hardwood with Sandstone accents";
+                        break;
+                    case 7:
+                        costPerMeter = 4500;
+                        fenceType = "Wrought iron";
+                        break;
+                    case 8:
+                        costPerMeter = 5500;
+                        fenceType = "Sandstone parameter wall";
+                        break;
+                    default:
+                        costPerMeter = 0;
+                        fenceType = "Invalid fence type selected";           
+                }
+            } while(fenceTypeChoice<0 && fenceTypeChoice>8);
+            
+            fencingCost = perimeter * costPerMeter;
+            System.out.println("Estimated Fencing Cost of "+ fenceType + "is" + df.format(fencingCost));
         }
+        
         if (plantSpacing > 0) {
-            double plantsPerRow = Math.floor(length / plantSpacing);
-            double numberOfRows = Math.floor(width / plantSpacing);
-            int estimatedPlants = (int) (plantsPerRow * numberOfRows);
+            plantsPerRow = Math.floor(length / plantSpacing);
+            numberOfRows = Math.floor(width / plantSpacing);
+            estimatedPlants = (int) (plantsPerRow * numberOfRows);
+
             System.out.println("Estimated number of " + selectedPlant + " that can fit: " + estimatedPlants);
         } else {
             System.out.println("Could not estimate the number of plants due to missing spacing information.");
