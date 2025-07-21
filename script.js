@@ -130,3 +130,6 @@ function gardenCalculator() {
     alert("Could not estimate the number of plants due to missing spacing information.");
   }
 }
+function print(text) {
+  document.getElementById("output").innerText += text + "\n";
+}
