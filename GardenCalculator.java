@@ -4,11 +4,16 @@ public class GardenCalculator {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
 
+        char fenceChoice = ' ';
         int plantChoice = 0;
+        int fenceType = 0;
+        String fenceTypeChoice = " ";
         String selectedPlant = " ";
         double plantSpacing = 0;
+        double costPerMeter = 0;
         String growthTime = " ";
         String growthInstructions = " "; 
+        
 
         System.out.print("Enter garden length (m): ");
         double length = sc.nextDouble();
@@ -147,17 +152,58 @@ public class GardenCalculator {
                 break;
             default:
                 growthInstructions = "No instructions available.";
-        }
+        } 
+        System.out.println(growthInstructions);
 
         double perimeter = 2 * (length + width);
         System.out.println("\nGarden Perimeter: " + perimeter + " meters.");
 
-        System.out.print("Enter the cost per meter of fencing: ");
-        double costPerMeter = sc.nextDouble();
+        System.out.println("Would you like a fence for your garden?(Y/N)");
+        fenceChoice = sc.next().charAt(0);
+        
+        if(fenceChoice == 'y'||fenceChoice=='Y'){
+            System.out.print("Which Type of fence would you like? \n1. Treated pine(R600 per metre) \n2. Tubular metal/Palisade(R900 per metre)  \n3. Slated pine(R1000 per metre) \n 4. Clear-view(R1500 per metre \n5. Hardwood(R1800 per metre) \n6. Hardwood with Sandstone accents(R3000) \n7. Wrought iron(R4500 per metre) \n8. Sandstone parameter wall(R5500)");
+            s
+            switch (fenceTypeChoice){
+                case 1:
+                    costPerMeter = 600;
+                    fenceType = "Treated pine";
+                    break;
+                case 2:
+                    costPerMeter = 900;
+                    fenceType = "Tubular metal/Palisade";
+                    break;
+                case 3:
+                    costPerMeter = 1000;
+                    fenceType = "Slated pine";
+                    break;
+                case 4:
+                    costPerMeter = 1500;
+                    fenceType = "Clear-view";
+                    break;
+                case 5:
+                    costPerMeter = 1800;
+                    fenceType = "Hardwood";
+                    break;
+                case 6:
+                    costPerMeter = 3000;
+                    fenceType = "Hardwood with Sandstone accents";
+                    break;
+                case 7:
+                    costPerMeter = 4500;
+                    fenceType = "Wrought iron";
+                    break;
+                case 8:
+                    costPerMeter = 5500;
+                    fenceType = "Sandstone parameter wall";
+                    break;
+                default:
+                            
+            }
 
-        double fencingCost = perimeter * costPerMeter;
-        System.out.println("Estimated Fencing Cost: R" + fencingCost);
-
+            double fencingCost = perimeter * costPerMeter;
+            System.out.println("Estimated Fencing Cost of "+ fenceType + "is" + fencingCost);
+        }
         if (plantSpacing > 0) {
             double plantsPerRow = Math.floor(length / plantSpacing);
             double numberOfRows = Math.floor(width / plantSpacing);
@@ -166,7 +212,5 @@ public class GardenCalculator {
         } else {
             System.out.println("Could not estimate the number of plants due to missing spacing information.");
         }
-        
-        System.out.println(growthInstructions);
     }
 }
