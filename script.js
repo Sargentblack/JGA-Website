@@ -264,3 +264,198 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// Garden Calculator with improved UI and image analysis
+function gardenCalculator() {
+  const df = (value) => `R${value.toFixed(2)}`;
+
+  const output = document.getElementById("output");
+  output.innerHTML = ""; // Clear previous output
+
+  // Get values from form inputs
+  const length = parseFloat(document.getElementById("gardenLength").value);
+  const width = parseFloat(document.getElementById("gardenWidth").value);
+  const selectedPlant = document.getElementById("plantSelect").value;
+  const fenceYesNo = document.getElementById("fenceYesNo").value;
+  const fenceTypeIndex = parseInt(document.getElementById("fenceType").value);
+
+  // Validate inputs
+  if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
+    output.innerHTML = `<div class="error-message">Please enter valid garden dimensions.</div>`;
+    return;
+  }
+
+  const area = length * width;
+  
+  // Create beautiful garden plan output
+  let planHTML = `
+    <div class="garden-plan">
+      <div class="plan-header">
+        <h3>🌿 Your Garden Plan</h3>
+        <div class="plan-date">Created on ${new Date().toLocaleDateString()}</div>
+      </div>
+      
+      <div class="plan-grid">
+        <div class="plan-card">
+          <div class="plan-icon">📐</div>
+          <div class="plan-details">
+            <h4>Garden Dimensions</h4>
+            <p>${length.toFixed(2)}m × ${width.toFixed(2)}m</p>
+            <p class="plan-highlight">Area: ${area.toFixed(2)} sq. meters</p>
+          </div>
+        </div>
+        
+        <div class="plan-card">
+          <div class="plan-icon">🌱</div>
+          <div class="plan-details">
+            <h4>Selected Plant</h4>
+            <p class="plant-name">${selectedPlant}</p>
+          </div>
+        </div>
+  `;
+
+  const plantOptions = {
+    "Cabbage": { spacing: 0.45, time: "3-4 months", soil: "Well-drained, fertile" },
+    "Potatoes": { spacing: 0.3, time: "3-4 months", soil: "Loose, well-drained" },
+    "Spinach": { spacing: 0.1, time: "6-8 weeks", soil: "Moist, nutrient-rich" },
+    "Carrots": { spacing: 0.06, time: "2-3 months", soil: "Sandy, stone-free" },
+    "Maize (Mealies)": { spacing: 0.3, time: "3-4 months", soil: "Fertile, well-drained" },
+    "Pumpkin": { spacing: 1.5, time: "3-4 months", soil: "Rich, well-drained" },
+    "Onion": { spacing: 0.125, time: "3-4 months", soil: "Fertile, well-drained" },
+    "Beetroot": { spacing: 0.125, time: "2-3 months", soil: "Loose, well-drained" },
+    "Tomatoes": { spacing: 0.75, time: "2-3 months", soil: "Fertile, well-drained" }
+  };
+
+  const growthInstructions = {
+    "Cabbage": `1. Choose a sunny spot with well-drained soil.\n2. Sow seeds indoors 4-6 weeks before the last frost or direct sow outdoors.\n3. Space seedlings 30-60 cm apart.\n4. Water regularly, especially during dry periods.\n5. Harvest when heads are firm and mature.`,
+    "Potatoes": `1. Select a sunny location with loose, well-drained soil.\n2. Plant seed potatoes about 15 cm deep and 30 cm apart.\n3. As shoots emerge, hill the soil around them to encourage more potato growth.\n4. Water regularly, especially when tubers are forming.\n5. Harvest when the foliage starts to die back.`,
+    "Spinach": `1. Plant in a sunny or partially shaded area with well-drained soil.\n2. Sow seeds directly in the ground, about 1 cm deep and 5-10 cm apart.\n3. Keep the soil consistently moist.\n4. Harvest outer leaves as needed or cut the whole plant.\n5. Spinach prefers cooler weather.`,
+    "Carrots": `1. Choose a sunny spot with loose, stone-free soil.\n2. Sow seeds directly in the ground, about 1 cm deep and 2-5 cm apart.\n3. Thin seedlings to about 5-7 cm apart.\n4. Water regularly and avoid excessive nitrogen fertilizer.\n5. Harvest when roots are of a desired size and color.`,
+    "Maize (Mealies)": `1. Select a sunny location with fertile, well-drained soil.\n2. Sow seeds directly in the ground, about 2-3 cm deep and in blocks for good pollination.\n3. Water regularly, especially during tasseling and ear development.\n4. Harvest when silks have turned brown and kernels are plump.`,
+    "Pumpkin": `1. Plant in a sunny location with rich, well-drained soil.\n2. Sow seeds in hills, about 2-3 cm deep, with several seeds per hill.\n3. Thin to the strongest 2-3 seedlings per hill.\n4. Water deeply and regularly.\n5. Harvest when the skin is hard and the stem is dry.`,
+    "Onion": `1. Choose a sunny spot with well-drained, fertile soil.\n2. Plant sets about 2-3 cm deep and 10-15 cm apart, or sow seeds thinly.\n3. Water regularly, especially during bulb formation.\n4. Harvest when the tops start to turn yellow and fall over.`,
+    "Beetroot": `1. Plant in a sunny location with loose, well-drained soil.\n2. Sow seeds directly in the ground, about 1-2 cm deep and 5-10 cm apart.\n3. Thin seedlings to about 10-15 cm apart.\n4. Water regularly.\n5. Harvest when roots are of a desired size.`,
+    "Tomatoes": `1. Select a sunny spot with well-drained, fertile soil.\n2. Start seeds indoors 6-8 weeks before the last frost or purchase seedlings.\n3. Transplant seedlings when they are strong enough, spacing them 60-90 cm apart.\n4. Water regularly and provide support like 'stakes' or 'cages' as they grow.\n5. Harvest when fruits are fully colored and slightly soft to the touch.`
+  };
+
+  const plantData = plantOptions[selectedPlant];
+  
+  planHTML += `
+        <div class="plan-card">
+          <div class="plan-icon">📏</div>
+          <div class="plan-details">
+            <h4>Plant Spacing</h4>
+            <p>${plantData.spacing} meters</p>
+          </div>
+        </div>
+        
+        <div class="plan-card">
+          <div class="plan-icon">⏱️</div>
+          <div class="plan-details">
+            <h4>Growth Time</h4>
+            <p>${plantData.time}</p>
+          </div>
+        </div>
+      </div>
+  `;
+
+  // Calculate plant capacity
+  if (plantData.spacing > 0) {
+    const plantsPerRow = Math.floor(length / plantData.spacing);
+    const numberOfRows = Math.floor(width / plantData.spacing);
+    const estimatedPlants = plantsPerRow * numberOfRows;
+    
+    planHTML += `
+      <div class="plan-highlight-card">
+        <div class="plan-icon">🌿</div>
+        <div class="plan-details">
+          <h4>Estimated Plant Capacity</h4>
+          <p class="plant-count">${estimatedPlants} ${selectedPlant} plants</p>
+        </div>
+      </div>
+    `;
+  }
+
+  // Fencing calculation
+  const perimeter = 2 * (length + width);
+  const fenceOptions = [
+    ["Treated pine", 600],
+    ["Tubular metal/Palisade", 900],
+    ["Slated pine", 1000],
+    ["Clear-view", 1500],
+    ["Hardwood", 1800],
+    ["Hardwood with Sandstone accents", 3000],
+    ["Wrought iron", 4500],
+    ["Sandstone parameter wall", 5500]
+  ];
+
+  if (fenceYesNo === "Y") {
+    if (fenceTypeIndex >= 0 && fenceTypeIndex <= 7) {
+      const [fenceType, costPerMeter] = fenceOptions[fenceTypeIndex];
+      const fencingCost = perimeter * costPerMeter;
+      
+      planHTML += `
+        <div class="plan-cost-card">
+          <div class="plan-icon">💰</div>
+          <div class="plan-details">
+            <h4>Fencing Estimate</h4>
+            <p>${fenceType}</p>
+            <p class="cost">${df(fencingCost)}</p>
+            <small>Perimeter: ${perimeter.toFixed(2)} meters</small>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Planting guide
+  planHTML += `
+      <div class="plan-guide">
+        <h4>📋 Planting Guide for ${selectedPlant}</h4>
+        <div class="guide-content">
+          ${growthInstructions[selectedPlant].replace(/\n/g, '<br>')}
+        </div>
+      </div>
+      
+      <div class="plan-footer">
+        <p>Happy gardening! 🌻</p>
+      </div>
+    </div>
+  `;
+
+  output.innerHTML = planHTML;
+  
+  // Show success popup
+  showPopup();
+}
+
+// Popup functions
+function showPopup() {
+  const popup = document.getElementById("successPopup");
+  popup.style.display = "block";
+}
+
+function closePopup() {
+  const popup = document.getElementById("successPopup");
+  popup.style.display = "none";
+}
+
+function clearResults() {
+  document.getElementById("output").innerHTML = "";
+}
+
+// Close popup when clicking the X
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.close-popup').addEventListener('click', closePopup);
+  
+  // Close popup when clicking outside
+  window.addEventListener('click', function(event) {
+    const popup = document.getElementById("successPopup");
+    if (event.target === popup) {
+      closePopup();
+    }
+  });
+});
+
+// ... rest of your existing functions (toggleFenceOptions, handleImageUpload, community functions, etc.)
+// Keep all the existing functions from your original script.js file

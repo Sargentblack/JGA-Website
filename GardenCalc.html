@@ -24,6 +24,17 @@
     <h1 style="text-align: center; color: #2e7d32;">Garden Planning Calculator</h1>
     <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">Plan your perfect garden with our comprehensive calculator</p>
 
+    <!-- Success Popup -->
+    <div id="successPopup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <div class="popup-icon">🌱</div>
+        <h3>Garden Plan Created Successfully!</h3>
+        <p>Your garden plan has been generated. Check the results below.</p>
+        <button class="calc-button" onclick="closePopup()">Continue</button>
+      </div>
+    </div>
+
     <div class="calculator-container">
       <h2>Manual Garden Input</h2>
       <div class="calc-input-group">
@@ -93,10 +104,10 @@
       </div>
     </div>
 
-    <div id="output" style="margin-top: 30px;"></div>
+    <div id="output" class="garden-plan-output" style="margin-top: 30px;"></div>
     
     <div style="text-align: center; margin-top: 30px;">
-      <button class="calc-button secondary" onclick="document.getElementById('output').textContent = ''">Clear Results</button>
+      <button class="calc-button secondary" onclick="clearResults()">Clear Results</button>
       <button class="calc-button" onclick="window.location.href='market.html'">Shop Gardening Supplies</button>
     </div>
   </div>
