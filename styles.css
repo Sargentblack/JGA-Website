@@ -766,3 +766,50 @@ body{
     padding: 20px;
   }
 }
+
+/* Mobile touch feedback */
+@media (max-width: 768px) {
+  .touch-active {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(0.95) !important;
+    transition: all 0.1s ease !important;
+  }
+
+  .menu li.touch-active::after {
+    transform: scaleX(1) !important;
+  }
+}
+
+/* Scroll indicator for mobile menu */
+@media (max-width: 768px) {
+  .menu ul {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .menu ul.scrolling {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+  }
+}
+
+/* Future hamburger menu - you can implement this later */
+.mobile-menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+    background: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2em;
+  }
+}

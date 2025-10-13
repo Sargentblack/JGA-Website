@@ -457,5 +457,56 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// ... rest of your existing functions (toggleFenceOptions, handleImageUpload, community functions, etc.)
-// Keep all the existing functions from your original script.js file
+// Add this to your existing script.js file
+
+// Mobile-specific improvements
+function initMobileFeatures() {
+  // Improve touch experience
+  if ('ontouchstart' in window) {
+    document.body.classList.add('touch-device');
+  }
+
+  // Handle mobile menu scrolling
+  const menu = document.querySelector('.menu ul');
+  if (menu && window.innerWidth <= 768) {
+    let isScrolling;
+    menu.addEventListener('scroll', function() {
+      window.clearTimeout(isScrolling);
+      isScrolling = setTimeout(function() {
+        menu.classList.remove('scrolling');
+      }, 66);
+    }, false);
+  }
+
+  // Prevent zoom on double tap (iOS)
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', function(event) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+
+  // Improve button feedback on mobile
+  const buttons = document.querySelectorAll('button, .menu li');
+  buttons.forEach(button => {
+    button.addEventListener('touchstart', function() {
+      this.classList.add('touch-active');
+    });
+    
+    button.addEventListener('touchend', function() {
+      this.classList.remove('touch-active');
+    });
+  });
+}
+
+// Update the existing DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+  // Your existing initialization code...
+  
+  // Add mobile features
+  initMobileFeatures();
+  
+  // Your other existing code...
+});
