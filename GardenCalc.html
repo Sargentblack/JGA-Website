@@ -3,79 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Garden Planner</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2em;
-      background: #f7f7f7;
-    }
-    h1 {
-      color: #3b7f47;
-    }
-    label {
-      display: block;
-      margin: 1em 0 0.5em;
-    }
-    select, input, button {
-      padding: 0.5em;
-      font-size: 1em;
-    }
-    #output {
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 1em;
-      margin-top: 2em;
-      white-space: pre-wrap;
-    }
-  </style>
+  <title>Garden Planner - GreenThumb</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Garden Planner Calculator</h1>
+  <header class="toolbar">
+    <menu class="menu">
+      <ul style="list-style: none;">
+        <a href="index.html"><li>Home</li></a>
+        <a href="GardenCalc.html"><li>Garden Calculator</li></a>
+        <a href="community.html"><li>Community Dashboard</li></a>
+        <a href="market.html"><li>Resource Market</li></a>
+        <a href="report.html"><li>Report</li></a>
+        <a href="about.html"><li>About</li></a>
+      </ul>
+    </menu>
+  </header>
+  
+  <div class="MainBox">
+    <h1 style="text-align: center; color: #2e7d32;">Garden Planning Calculator</h1>
+    <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">Plan your perfect garden with our comprehensive calculator</p>
 
-  <label>Garden Length (meters):</label>
-  <input type="number" id="length" step="0.01" />
+    <div class="calculator-container">
+      <h2>Manual Garden Input</h2>
+      <div class="calc-input-group">
+        <label for="gardenLength">Garden Length (meters):</label>
+        <input type="number" id="gardenLength" step="0.01" min="0.1" value="5" placeholder="Enter length in meters">
+      </div>
+      
+      <div class="calc-input-group">
+        <label for="gardenWidth">Garden Width (meters):</label>
+        <input type="number" id="gardenWidth" step="0.01" min="0.1" value="3" placeholder="Enter width in meters">
+      </div>
+      
+      <div class="calc-input-group">
+        <label for="plantSelect">Select a Plant:</label>
+        <select id="plantSelect">
+          <option value="Cabbage">Cabbage</option>
+          <option value="Potatoes">Potatoes</option>
+          <option value="Spinach">Spinach</option>
+          <option value="Carrots">Carrots</option>
+          <option value="Maize (Mealies)">Maize (Mealies)</option>
+          <option value="Pumpkin">Pumpkin</option>
+          <option value="Onion">Onion</option>
+          <option value="Beetroot">Beetroot</option>
+          <option value="Tomatoes">Tomatoes</option>
+        </select>
+      </div>
+      
+      <div class="calc-input-group">
+        <label for="fenceYesNo">Would you like fencing?</label>
+        <select id="fenceYesNo" onchange="toggleFenceOptions()">
+          <option value="N">No</option>
+          <option value="Y">Yes</option>
+        </select>
+      </div>
+      
+      <div id="fenceOptions" style="display: none;">
+        <div class="calc-input-group">
+          <label for="fenceType">Select Fence Type:</label>
+          <select id="fenceType">
+            <option value="0">Treated pine (R600 per metre)</option>
+            <option value="1">Tubular metal/Palisade (R900 per metre)</option>
+            <option value="2">Slated pine (R1000 per metre)</option>
+            <option value="3">Clear-view (R1500 per metre)</option>
+            <option value="4">Hardwood (R1800 per metre)</option>
+            <option value="5">Hardwood with Sandstone accents (R3000 per metre)</option>
+            <option value="6">Wrought iron (R4500 per metre)</option>
+            <option value="7">Sandstone parameter wall (R5500 per metre)</option>
+          </select>
+        </div>
+      </div>
+      
+      <button class="calc-button" onclick="gardenCalculator()">Calculate Garden Plan</button>
+    </div>
 
-  <label>Garden Width (meters):</label>
-  <input type="number" id="width" step="0.01" />
+    <!-- Image Analysis Section -->
+    <div class="calculator-container">
+      <h2>Image Analysis (Beta)</h2>
+      <p>Upload a picture of your garden space for automated analysis</p>
+      
+      <div class="image-upload-container">
+        <input type="file" id="gardenImage" accept="image/*" onchange="handleImageUpload(event)" style="display: none;">
+        <label for="gardenImage" class="calc-button secondary" style="cursor: pointer; display: inline-block;">
+          📸 Upload Garden Image
+        </label>
+        <p style="margin-top: 10px; color: #666;">Supported formats: JPG, PNG, GIF</p>
+        <img id="uploadPreview" class="upload-preview" alt="Garden preview">
+      </div>
+    </div>
 
-  <label>Select a Plant:</label>
-  <select id="plant">
-    <option value="Cabbage">Cabbage</option>
-    <option value="Potatoes">Potatoes</option>
-    <option value="Spinach">Spinach</option>
-    <option value="Carrots">Carrots</option>
-    <option value="Maize (Mealies)">Maize (Mealies)</option>
-    <option value="Pumpkin">Pumpkin</option>
-    <option value="Onion">Onion</option>
-    <option value="Beetroot">Beetroot</option>
-    <option value="Tomatoes">Tomatoes</option>
-  </select>
-
-  <label>Would you like fencing?</label>
-  <select id="fenceYesNo">
-    <option value="N">No</option>
-    <option value="Y">Yes</option>
-  </select>
-
-  <div id="fenceOptions" style="display: none;">
-    <label>Select Fence Type:</label>
-    <select id="fenceType">
-      <option value="0">Treated pine (R600)</option>
-      <option value="1">Tubular metal/Palisade (R900)</option>
-      <option value="2">Slated pine (R1000)</option>
-      <option value="3">Clear-view (R1500)</option>
-      <option value="4">Hardwood (R1800)</option>
-      <option value="5">Hardwood w/ Sandstone (R3000)</option>
-      <option value="6">Wrought iron (R4500)</option>
-      <option value="7">Sandstone wall (R5500)</option>
-    </select>
+    <div id="output" style="margin-top: 30px;"></div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+      <button class="calc-button secondary" onclick="document.getElementById('output').textContent = ''">Clear Results</button>
+      <button class="calc-button" onclick="window.location.href='market.html'">Shop Gardening Supplies</button>
+    </div>
   </div>
-
-  <button onclick="gardenCalculator()">Calculate</button>
-
-  <pre id="output"></pre>
-
+  
+  <footer class="footer">
+    <menu class="menu">
+      <ul style="list-style: none;">
+        <a href="about.html"><li>About</li></a>
+        <a href="community.html"><li>Community</li></a>
+        <a href="market.html"><li>Market</li></a>
+        <a href="GardenCalc.html"><li>Garden Calculator</li></a>
+      </ul>
+    </menu>
+  </footer>
+  
   <script src="script.js"></script>
 </body>
 </html>

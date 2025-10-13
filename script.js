@@ -1,138 +1,266 @@
+// Garden Calculator with improved UI and image analysis
 function gardenCalculator() {
   const df = (value) => `R${value.toFixed(2)}`;
 
   const output = document.getElementById("output");
+  output.textContent = ""; // Clear previous output
 
   const print = (text) => {
     output.textContent += text + "\n";
   };
 
-  const length = parseFloat(prompt("Enter garden length (m): "));
-  const width = parseFloat(prompt("Enter garden width (m): "));
+  // Get values from form inputs
+  const length = parseFloat(document.getElementById("gardenLength").value);
+  const width = parseFloat(document.getElementById("gardenWidth").value);
+  const selectedPlant = document.getElementById("plantSelect").value;
+  const fenceYesNo = document.getElementById("fenceYesNo").value;
+  const fenceTypeIndex = parseInt(document.getElementById("fenceType").value);
+
+  // Validate inputs
+  if (isNaN(length) || isNaN(width) || length <= 0 || width <= 0) {
+    print("Please enter valid garden dimensions.");
+    return;
+  }
 
   const area = length * width;
   print("Garden Area: " + area.toFixed(2) + " sq. meters.");
 
-  const plantOptions = [
-    "Cabbage",
-    "Potatoes",
-    "Spinach",
-    "Carrots",
-    "Maize (Mealies)",
-    "Pumpkin",
-    "Onion",
-    "Beetroot",
-    "Tomatoes"
-  ];
+  const plantOptions = {
+    "Cabbage": { spacing: 0.45, time: "3-4 months", soil: "Well-drained, fertile" },
+    "Potatoes": { spacing: 0.3, time: "3-4 months", soil: "Loose, well-drained" },
+    "Spinach": { spacing: 0.1, time: "6-8 weeks", soil: "Moist, nutrient-rich" },
+    "Carrots": { spacing: 0.06, time: "2-3 months", soil: "Sandy, stone-free" },
+    "Maize (Mealies)": { spacing: 0.3, time: "3-4 months", soil: "Fertile, well-drained" },
+    "Pumpkin": { spacing: 1.5, time: "3-4 months", soil: "Rich, well-drained" },
+    "Onion": { spacing: 0.125, time: "3-4 months", soil: "Fertile, well-drained" },
+    "Beetroot": { spacing: 0.125, time: "2-3 months", soil: "Loose, well-drained" },
+    "Tomatoes": { spacing: 0.75, time: "2-3 months", soil: "Fertile, well-drained" }
+  };
 
-  let plantChoice;
-  let selectedPlant = "";
-  let plantSpacing = 0;
-  let growthTime = "";
-  let growthInstructions = "";
+  const growthInstructions = {
+    "Cabbage": `1. Choose a sunny spot with well-drained soil.\n2. Sow seeds indoors 4-6 weeks before the last frost or direct sow outdoors.\n3. Space seedlings 30-60 cm apart.\n4. Water regularly, especially during dry periods.\n5. Harvest when heads are firm and mature.`,
+    "Potatoes": `1. Select a sunny location with loose, well-drained soil.\n2. Plant seed potatoes about 15 cm deep and 30 cm apart.\n3. As shoots emerge, hill the soil around them to encourage more potato growth.\n4. Water regularly, especially when tubers are forming.\n5. Harvest when the foliage starts to die back.`,
+    "Spinach": `1. Plant in a sunny or partially shaded area with well-drained soil.\n2. Sow seeds directly in the ground, about 1 cm deep and 5-10 cm apart.\n3. Keep the soil consistently moist.\n4. Harvest outer leaves as needed or cut the whole plant.\n5. Spinach prefers cooler weather.`,
+    "Carrots": `1. Choose a sunny spot with loose, stone-free soil.\n2. Sow seeds directly in the ground, about 1 cm deep and 2-5 cm apart.\n3. Thin seedlings to about 5-7 cm apart.\n4. Water regularly and avoid excessive nitrogen fertilizer.\n5. Harvest when roots are of a desired size and color.`,
+    "Maize (Mealies)": `1. Select a sunny location with fertile, well-drained soil.\n2. Sow seeds directly in the ground, about 2-3 cm deep and in blocks for good pollination.\n3. Water regularly, especially during tasseling and ear development.\n4. Harvest when silks have turned brown and kernels are plump.`,
+    "Pumpkin": `1. Plant in a sunny location with rich, well-drained soil.\n2. Sow seeds in hills, about 2-3 cm deep, with several seeds per hill.\n3. Thin to the strongest 2-3 seedlings per hill.\n4. Water deeply and regularly.\n5. Harvest when the skin is hard and the stem is dry.`,
+    "Onion": `1. Choose a sunny spot with well-drained, fertile soil.\n2. Plant sets about 2-3 cm deep and 10-15 cm apart, or sow seeds thinly.\n3. Water regularly, especially during bulb formation.\n4. Harvest when the tops start to turn yellow and fall over.`,
+    "Beetroot": `1. Plant in a sunny location with loose, well-drained soil.\n2. Sow seeds directly in the ground, about 1-2 cm deep and 5-10 cm apart.\n3. Thin seedlings to about 10-15 cm apart.\n4. Water regularly.\n5. Harvest when roots are of a desired size.`,
+    "Tomatoes": `1. Select a sunny spot with well-drained, fertile soil.\n2. Start seeds indoors 6-8 weeks before the last frost or purchase seedlings.\n3. Transplant seedlings when they are strong enough, spacing them 60-90 cm apart.\n4. Water regularly and provide support like 'stakes' or 'cages' as they grow.\n5. Harvest when fruits are fully colored and slightly soft to the touch.`
+  };
 
-  do {
-    const choice = prompt(
-      "Available Plants to Grow:\n" +
-        plantOptions.map((plant, i) => `${i + 1}. ${plant}`).join("\n") +
-        "\n\nEnter the number corresponding to the plant you'd like to grow:"
-    );
-    plantChoice = parseInt(choice);
-
-    if (plantChoice >= 1 && plantChoice <= 9) {
-      selectedPlant = plantOptions[plantChoice - 1];
-      switch (selectedPlant) {
-        case "Cabbage":
-          plantSpacing = 0.45;
-          growthTime = "3-4 months";
-          growthInstructions = `1. Choose a sunny spot with well-drained soil.\n2. Sow seeds indoors 4-6 weeks before the last frost or direct sow outdoors.\n3. Space seedlings 30-60 cm apart.\n4. Water regularly, especially during dry periods.\n5. Harvest when heads are firm and mature.`;
-          break;
-        case "Potatoes":
-          plantSpacing = 0.3;
-          growthTime = "3-4 months";
-          growthInstructions = `1. Select a sunny location with loose, well-drained soil.\n2. Plant seed potatoes about 15 cm deep and 30 cm apart.\n3. As shoots emerge, hill the soil around them to encourage more potato growth.\n4. Water regularly, especially when tubers are forming.\n5. Harvest when the foliage starts to die back.`;
-          break;
-        case "Spinach":
-          plantSpacing = 0.1;
-          growthTime = "6-8 weeks";
-          growthInstructions = `1. Plant in a sunny or partially shaded area with well-drained soil.\n2. Sow seeds directly in the ground, about 1 cm deep and 5-10 cm apart.\n3. Keep the soil consistently moist.\n4. Harvest outer leaves as needed or cut the whole plant.\n5. Spinach prefers cooler weather.`;
-          break;
-        case "Carrots":
-          plantSpacing = 0.06;
-          growthTime = "2-3 months";
-          growthInstructions = `1. Choose a sunny spot with loose, stone-free soil.\n2. Sow seeds directly in the ground, about 1 cm deep and 2-5 cm apart.\n3. Thin seedlings to about 5-7 cm apart.\n4. Water regularly and avoid excessive nitrogen fertilizer.\n5. Harvest when roots are of a desired size and color.`;
-          break;
-        case "Maize (Mealies)":
-          plantSpacing = 0.3;
-          growthTime = "3-4 months";
-          growthInstructions = `1. Select a sunny location with fertile, well-drained soil.\n2. Sow seeds directly in the ground, about 2-3 cm deep and in blocks for good pollination (e.g., 30 cm apart in rows 60-90 cm apart).\n3. Water regularly, especially during tasseling and ear development.\n4. Harvest when silks have turned brown and kernels are plump.`;
-          break;
-        case "Pumpkin":
-          plantSpacing = 1.5;
-          growthTime = "3-4 months";
-          growthInstructions = `1. Plant in a sunny location with rich, well-drained soil.\n2. Sow seeds in hills, about 2-3 cm deep, with several seeds per hill and hills spaced 1-2 meters apart.\n3. Thin to the strongest 2-3 seedlings per hill.\n4. Water deeply and regularly.\n5. Harvest when the skin is hard and the stem is dry.`;
-          break;
-        case "Onion":
-          plantSpacing = 0.125;
-          growthTime = "3-4 months";
-          growthInstructions = `1. Choose a sunny spot with well-drained, fertile soil.\n2. Plant sets about 2-3 cm deep and 10-15 cm apart, or sow seeds thinly.\n3. Water regularly, especially during bulb formation.\n4. Harvest when the tops start to turn yellow and fall over.`;
-          break;
-        case "Beetroot":
-          plantSpacing = 0.125;
-          growthTime = "2-3 months";
-          growthInstructions = `1. Plant in a sunny location with loose, well-drained soil.\n2. Sow seeds directly in the ground, about 1-2 cm deep and 5-10 cm apart.\n3. Thin seedlings to about 10-15 cm apart.\n4. Water regularly.\n5. Harvest when roots are of a desired size.`;
-          break;
-        case "Tomatoes":
-          plantSpacing = 0.75;
-          growthTime = "2-3 months";
-          growthInstructions = `1. Select a sunny spot with well-drained, fertile soil.\n2. Start seeds indoors 6-8 weeks before the last frost or purchase seedlings.\n3. Transplant seedlings when they are strong enough, spacing them 60-90 cm apart.\n4. Water regularly and provide support like 'stakes' or 'cages' as they grow.\n5. Harvest when fruits are fully colored and slightly soft to the touch.`;
-          break;
-      }
-    } else {
-      print("Invalid choice. Please select from the list.");
-      return;
-    }
-  } while (!(plantChoice >= 1 && plantChoice <= 9));
-
-  print(`\nYou have selected: ${selectedPlant}\nSpacing: ${plantSpacing} meters\nEstimated Growth Time: ${growthTime}\n\n--- Planting Guide for ${selectedPlant} ---\n${growthInstructions}`);
+  const plantData = plantOptions[selectedPlant];
+  print(`\nYou have selected: ${selectedPlant}\nSpacing: ${plantData.spacing} meters\nEstimated Growth Time: ${plantData.time}\nRecommended Soil: ${plantData.soil}\n\n--- Planting Guide for ${selectedPlant} ---\n${growthInstructions[selectedPlant]}`);
 
   const perimeter = 2 * (length + width);
-  print("Garden Perimeter: " + perimeter.toFixed(2) + " meters.");
+  print("\nGarden Perimeter: " + perimeter.toFixed(2) + " meters.");
 
-  const fenceChoice = prompt("Would you like a fence for your garden? (Y/N):");
-  let costPerMeter = 0;
-  let fenceType = "";
-  if (fenceChoice.toUpperCase() === "Y") {
-    const fenceOptions = [
-      ["Treated pine", 600],
-      ["Tubular metal/Palisade", 900],
-      ["Slated pine", 1000],
-      ["Clear-view", 1500],
-      ["Hardwood", 1800],
-      ["Hardwood with Sandstone accents", 3000],
-      ["Wrought iron", 4500],
-      ["Sandstone parameter wall", 5500]
-    ];
-    const fenceTypeChoice = parseInt(prompt(
-      "Which Type of fence would you like?\n" +
-        fenceOptions.map((f, i) => `${i + 1}. ${f[0]} (R${f[1]} per metre)`).join("\n")
-    ));
+  const fenceOptions = [
+    ["Treated pine", 600],
+    ["Tubular metal/Palisade", 900],
+    ["Slated pine", 1000],
+    ["Clear-view", 1500],
+    ["Hardwood", 1800],
+    ["Hardwood with Sandstone accents", 3000],
+    ["Wrought iron", 4500],
+    ["Sandstone parameter wall", 5500]
+  ];
 
-    if (fenceTypeChoice >= 1 && fenceTypeChoice <= 8) {
-      [fenceType, costPerMeter] = fenceOptions[fenceTypeChoice - 1];
+  if (fenceYesNo === "Y") {
+    if (fenceTypeIndex >= 0 && fenceTypeIndex <= 7) {
+      const [fenceType, costPerMeter] = fenceOptions[fenceTypeIndex];
       const fencingCost = perimeter * costPerMeter;
-      print(`Estimated Fencing Cost of ${fenceType} is ${df(fencingCost)}`);
+      print(`\nEstimated Fencing Cost of ${fenceType} is ${df(fencingCost)}`);
     } else {
       print("Invalid fence type selected.");
     }
   }
 
-  if (plantSpacing > 0) {
-    const plantsPerRow = Math.floor(length / plantSpacing);
-    const numberOfRows = Math.floor(width / plantSpacing);
+  if (plantData.spacing > 0) {
+    const plantsPerRow = Math.floor(length / plantData.spacing);
+    const numberOfRows = Math.floor(width / plantData.spacing);
     const estimatedPlants = plantsPerRow * numberOfRows;
-    print(`Estimated number of ${selectedPlant} that can fit: ${estimatedPlants}`);
+    print(`\nEstimated number of ${selectedPlant} that can fit: ${estimatedPlants}`);
   } else {
     print("Could not estimate the number of plants due to missing spacing information.");
   }
 }
+
+// Toggle fence options based on user selection
+function toggleFenceOptions() {
+  const fenceYesNo = document.getElementById("fenceYesNo").value;
+  const fenceOptions = document.getElementById("fenceOptions");
+  
+  if (fenceYesNo === "Y") {
+    fenceOptions.style.display = "block";
+    fenceOptions.style.animation = "fadeIn 0.5s ease-in";
+  } else {
+    fenceOptions.style.display = "none";
+  }
+}
+
+// Image Upload and Analysis (Simulated)
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById('uploadPreview');
+  const output = document.getElementById('output');
+  
+  if (file) {
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      
+      // Simulate image analysis
+      output.textContent = "Analyzing garden image...\n";
+      setTimeout(() => {
+        output.textContent += "✓ Image analysis complete!\n";
+        output.textContent += "✓ Estimated garden size: 25 sq. meters\n";
+        output.textContent += "✓ Soil type detected: Loamy soil (ideal for most plants)\n";
+        output.textContent += "✓ Recommended plants: Tomatoes, Carrots, Spinach\n";
+        output.textContent += "✓ Sunlight exposure: Good (6-8 hours daily)\n\n";
+        output.textContent += "Tip: Based on your soil type, consider adding compost for better yield.";
+      }, 2000);
+    };
+    
+    reader.readAsDataURL(file);
+  }
+}
+
+// Community Dashboard Functions
+function addPost() {
+  const postContent = document.getElementById("postContent").value;
+  const postImageInput = document.getElementById("postImage");
+  
+  if (postContent.trim() === "" && !postImageInput.files[0]) {
+    alert("Please write something or add an image to post.");
+    return;
+  }
+  
+  const postsContainer = document.getElementById("communityPosts");
+  const postId = "post_" + Date.now();
+  
+  let imageHTML = "";
+  if (postImageInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById(postId + '_image').src = e.target.result;
+    };
+    reader.readAsDataURL(postImageInput.files[0]);
+    imageHTML = `<img class="post-image" id="${postId}_image" src="" alt="Post image">`;
+  }
+  
+  const postHTML = `
+    <div class="post-card" id="${postId}">
+      <div class="post-header">
+        <div class="post-avatar">U</div>
+        <div>
+          <strong>You</strong>
+          <div class="post-time">Just now</div>
+        </div>
+      </div>
+      <div class="post-content">${postContent}</div>
+      ${imageHTML}
+      <div class="post-actions">
+        <button class="post-action" onclick="likePost('${postId}')">👍 Like</button>
+        <button class="post-action" onclick="commentOnPost('${postId}')">💬 Comment</button>
+        <button class="post-action" onclick="sharePost('${postId}')">🔄 Share</button>
+        <button class="post-action" onclick="deletePost('${postId}')">🗑️ Delete</button>
+      </div>
+      <div class="post-likes" id="${postId}_likes">0 likes</div>
+      <div class="post-comments" id="${postId}_comments"></div>
+    </div>
+  `;
+  
+  postsContainer.insertAdjacentHTML('afterbegin', postHTML);
+  document.getElementById("postContent").value = "";
+  postImageInput.value = "";
+  
+  // Add animation to new post
+  const newPost = document.getElementById(postId);
+  newPost.style.animation = "slideIn 0.5s ease-out";
+}
+
+function likePost(postId) {
+  const likesElement = document.getElementById(postId + "_likes");
+  const currentLikes = parseInt(likesElement.textContent) || 0;
+  likesElement.textContent = (currentLikes + 1) + " likes";
+  
+  // Add visual feedback
+  likesElement.style.color = "#2e7d32";
+  likesElement.style.fontWeight = "bold";
+  setTimeout(() => {
+    likesElement.style.color = "";
+    likesElement.style.fontWeight = "";
+  }, 1000);
+}
+
+function commentOnPost(postId) {
+  const comment = prompt("Enter your comment:");
+  if (comment && comment.trim() !== "") {
+    const commentsElement = document.getElementById(postId + "_comments");
+    const commentHTML = `<div class="comment"><strong>You:</strong> ${comment}</div>`;
+    commentsElement.insertAdjacentHTML('beforeend', commentHTML);
+  }
+}
+
+function sharePost(postId) {
+  alert("Post shared successfully!");
+}
+
+function deletePost(postId) {
+  if (confirm("Are you sure you want to delete this post?")) {
+    const postElement = document.getElementById(postId);
+    postElement.style.animation = "fadeOut 0.5s ease-out";
+    setTimeout(() => {
+      postElement.remove();
+    }, 500);
+  }
+}
+
+// Market Functions
+function addToCart(itemName, price) {
+  // In a real application, this would add to a shopping cart
+  alert(`Added ${itemName} to cart for ${price}`);
+  
+  // Visual feedback
+  const button = event.target;
+  const originalText = button.textContent;
+  button.textContent = "✓ Added!";
+  button.style.background = "linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%)";
+  
+  setTimeout(() => {
+    button.textContent = originalText;
+    button.style.background = "";
+  }, 2000);
+}
+
+// Initialize page elements
+document.addEventListener('DOMContentLoaded', function() {
+  // Add CSS for fadeOut animation if not already present
+  if (!document.querySelector('#dynamicStyles')) {
+    const style = document.createElement('style');
+    style.id = 'dynamicStyles';
+    style.textContent = `
+      @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-20px); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Initialize any page-specific functionality
+  if (document.getElementById('fenceYesNo')) {
+    toggleFenceOptions(); // Set initial state
+  }
+  
+  // Add loading animation to images
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    img.addEventListener('load', function() {
+      this.style.animation = 'fadeIn 0.5s ease-in';
+    });
+  });
+});

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Dashboard - GreenThumb</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="toolbar">
+    <menu class="menu">
+      <ul style="list-style: none;">
+        <a href="index.html"><li>Home</li></a>
+        <a href="GardenCalc.html"><li>Garden Calculator</li></a>
+        <a href="community.html"><li>Community Dashboard</li></a>
+        <a href="market.html"><li>Resource Market</li></a>
+        <a href="about.html"><li>About</li></a>
+      </ul>
+    </menu>
+  </header>
+  <div class="MainBox">
+    <div class="Box">
+      <h1>Community Dashboard</h1>
+      <p>Share your gardening experiences, ask questions, and connect with fellow gardeners.</p>
+      
+      <div class="Box" style="background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);">
+        <h3>Create a Post</h3>
+        <textarea id="postContent" rows="4" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #c8e6c9;" placeholder="Share your gardening tips, ask questions, or post updates..."></textarea>
+        
+        <div style="margin: 15px 0;">
+          <label for="postImage" style="display: block; margin-bottom: 8px; font-weight: bold; color: #2e7d32;">Add Image (Optional):</label>
+          <input type="file" id="postImage" accept="image/*" style="padding: 8px; border-radius: 8px; border: 1px solid #c8e6c9; width: 100%;">
+        </div>
+        
+        <button class="calc-button" onclick="addPost()" style="margin-top: 10px;">Post to Community</button>
+      </div>
+      
+      <h2>Community Posts</h2>
+      <div id="communityPosts" class="community-posts">
+        <!-- Sample posts -->
+        <div class="post-card">
+          <div class="post-header">
+            <div class="post-avatar">G</div>
+            <div>
+              <strong>GreenThumbGary</strong>
+              <div class="post-time">2 hours ago</div>
+            </div>
+          </div>
+          <div class="post-content">Just harvested my first batch of tomatoes this season! The companion planting with basil really helped keep pests away. Anyone else trying companion planting?</div>
+          <img class="post-image" src="Files/media/Image1.jpg" alt="Tomato harvest">
+          <div class="post-actions">
+            <button class="post-action" onclick="likePost('sample1')">👍 Like</button>
+            <button class="post-action" onclick="commentOnPost('sample1')">💬 Comment</button>
+            <button class="post-action" onclick="sharePost('sample1')">🔄 Share</button>
+          </div>
+          <div class="post-likes" id="sample1_likes">12 likes</div>
+          <div class="post-comments" id="sample1_comments">
+            <div class="comment"><strong>GardenLover:</strong> Beautiful harvest! What variety are those tomatoes?</div>
+          </div>
+        </div>
+        
+        <div class="post-card">
+          <div class="post-header">
+            <div class="post-avatar">R</div>
+            <div>
+              <strong>RainwaterRita</strong>
+              <div class="post-time">1 day ago</div>
+            </div>
+          </div>
+          <div class="post-content">I set up a rainwater harvesting system for my garden and it's made such a difference! My water bill is down 30% and the plants seem to love the natural water. Highly recommend if you have the space!</div>
+          <div class="post-actions">
+            <button class="post-action" onclick="likePost('sample2')">👍 Like</button>
+            <button class="post-action" onclick="commentOnPost('sample2')">💬 Comment</button>
+            <button class="post-action" onclick="sharePost('sample2')">🔄 Share</button>
+          </div>
+          <div class="post-likes" id="sample2_likes">24 likes</div>
+          <div class="post-comments" id="sample2_comments">
+            <div class="comment"><strong>WaterWiseWill:</strong> Great idea! How big is your collection tank?</div>
+            <div class="comment"><strong>RainwaterRita:</strong> It's 1000 liters! Enough for my medium-sized garden.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <menu class="menu">
+      <ul style="list-style: none;">
+        <a href="about.html"><li>About</li></a>
+        <a href="community.html"><li>Community</li></a>
+        <a href="market.html"><li>Market</li></a>
+        <a href="GardenCalc.html"><li>Garden Calculator</li></a>
+      </ul>
+    </menu>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
